@@ -1,0 +1,35 @@
+{
+  "name": "pro-singulis",
+  "version": "1.0.0",
+  "description": "A simple yet very powerful \"forEach\" implementation",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michbuett/pro-singulis.git"
+  },
+  "keywords": [
+    "forEach",
+    "each"
+  ],
+  "author": "Michael Büttner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michbuett/pro-singulis/issues"
+  },
+  "homepage": "https://github.com/michbuett/pro-singulis",
+  "devDependencies": {
+    "babelify": "^6.1.3",
+    "browserify": "^11.0.0",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^3.8.0",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jasmine": "^0.9.0",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jasmine-node": "^0.3.1"
+  }
+}
