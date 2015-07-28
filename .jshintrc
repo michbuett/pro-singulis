@@ -6,7 +6,6 @@
     "curly": true,
     "latedef": true,
     "noarg": true,
-    "nocomma": true,
     "nonew": true,
     "strict": true,
     "undef": true,
@@ -21,6 +20,7 @@
         "beforeEach": false,
         "afterEach": false,
         "expect": false,
-        "spyOn": false
+        "spyOn": false,
+        "jasmine": false
     }
 }
