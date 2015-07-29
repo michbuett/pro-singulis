@@ -31,7 +31,7 @@
  *      be passed to the callback function
  * @return {Object/Array} The aggregated results of each callback (see examples)
  */
-module.exports = function each(iterable, fn, scope, more) {
+ function each(iterable, fn, scope, more) {
     var args = [null, null];
     var result, resultSet;
     var i, l;
@@ -74,4 +74,21 @@ module.exports = function each(iterable, fn, scope, more) {
     }
 
     return resultSet;
+}
+
+/**
+ * Creates a function which is bound to a given callback and scope
+ *
+ * @param {Function} fn The callback (same as for each itself)
+ * @param {Object} scope The execution context for the callback
+ * @return Function The new iterator function which expects the
+ *      iterable and an array of additional parameter which are
+ *      passed to the callback
+ */
+each.prepare = function (fn, scope) {
+    return function (iterable, more) {
+        return each(iterable, fn, scope, more);
+    };
 };
+
+module.exports = each;
