@@ -5,7 +5,7 @@
   "main": "src/each.js",
   "scripts": {
     "test": "./node_modules/grunt-cli/bin/grunt test",
-    "postinstall": "./node_modules/grunt-cli/bin/grunt dist"
+    "prepublish": "./node_modules/grunt-cli/bin/grunt dist"
   },
   "repository": {
     "type": "git",
