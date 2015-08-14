@@ -2,3 +2,4 @@
 dist/
 node_modules/
 _SpecRunner.html
+_source_loader.js
