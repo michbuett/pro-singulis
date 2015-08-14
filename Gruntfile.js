@@ -77,6 +77,10 @@ module.exports = function (grunt) {
             },
         },
 
+        clean: {
+            dist: ['dist/*'],
+        },
+
         uglify: {
             dist: {
                 files: {
@@ -88,13 +92,14 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-jasmine-nodejs');
 
     grunt.registerTask('test', ['jshint', 'jasmine_nodejs', 'buildLoader', 'jasmine']);
-    grunt.registerTask('dist', ['browserify:dist', 'uglify:dist']);
+    grunt.registerTask('dist', ['clean', 'browserify:dist', 'uglify:dist']);
     grunt.registerTask('buildLoader', function () {
         grunt.log.writeln('Build webloader');
 
