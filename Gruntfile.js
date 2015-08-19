@@ -67,13 +67,28 @@ module.exports = function (grunt) {
         },
 
         jasmine: {
-            options: {
-                keepRunner: true,
-                specs: 'tests/**/*.js',
-            },
+            coverage: {
+                src: ['src/**/*.js'],
 
-            all: {
-                src: '_source_loader.js'
+                options: {
+                    keepRunner: true,
+                    specs: 'tests/**/*.js',
+                    template: require('grunt-template-jasmine-istanbul'),
+                    templateOptions: {
+                        template: require('grunt-template-jasmine-nml'),
+                        templateOptions: {
+                            sourceRoot: '.grunt/grunt-contrib-jasmine/',
+                        },
+                        coverage: 'reports/coverage/coverage.json',
+                        report: 'reports/coverage',
+                        thresholds: {
+                            lines: 85,
+                            statements: 85,
+                            branches: 80,
+                            functions: 90
+                        },
+                    }
+                },
             },
         },
 
@@ -98,18 +113,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-jasmine-nodejs');
 
-    grunt.registerTask('test', ['jshint', 'jasmine_nodejs', 'buildLoader', 'jasmine']);
+    grunt.registerTask('test', ['jshint', 'jasmine_nodejs', 'jasmine']);
     grunt.registerTask('dist', ['clean', 'browserify:dist', 'uglify:dist']);
-    grunt.registerTask('buildLoader', function () {
-        grunt.log.writeln('Build webloader');
-
-        var path = require('path');
-        var loader = require('node-module-loader');
-
-        loader.build({
-            root: path.resolve(__dirname, ''),
-            modules: ['./src/each'],
-            target: '_source_loader.js'
-        });
-    });
 };

@@ -1,5 +1,5 @@
 .grunt/
 dist/
 node_modules/
+reports/
 _SpecRunner.html
-_source_loader.js
