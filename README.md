@@ -1,10 +1,12 @@
-# pro-singulis
+pro-singulis
+============
 
 [![Build Status](https://travis-ci.org/michbuett/pro-singulis.svg?branch=master)](https://travis-ci.org/michbuett/pro-singulis) [![npm version](https://badge.fury.io/js/pro-singulis.svg)](http://badge.fury.io/js/pro-singulis)
 
 A simple and lean yet powerful "forEach"
 
-#Usage
+How do I use it
+---------------
 ```js
 var each = require('pro-singulis');
 
@@ -32,5 +34,10 @@ var f = each.prepare(doStuff, inContext);
 f(['foo', 'bar', 'baz']); // calls "doStuff" with "inContext" as this
 ```
 
-#License
-MIT
+Does it work in the browser?
+----------------------------
+Yes. The npm packge contains a standalone (an minified) version: dist/pro-singulis.min.js
+
+License
+-------
+MIT.
