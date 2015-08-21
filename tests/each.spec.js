@@ -1,6 +1,10 @@
+/* global window */
 describe('each', function () {
     'use strict';
 
+    var req = typeof require === 'function' ? require : function () {
+        return window.proSingulis;
+    };
     var expectedScope = {};
     var actualScope;
     var args = ['foo', 'bar', 'baz'];
@@ -14,7 +18,7 @@ describe('each', function () {
 
     it('allows to iterate through arrays', function () {
         // prepare
-        var each = require('../src/each');
+        var each = req('../src/each');
         var array = [1, 2, 3, 4, 5];
 
         // execute
@@ -37,7 +41,7 @@ describe('each', function () {
 
     it('allows to iterate through objects', function () {
         // prepare
-        var each = require('../src/each');
+        var each = req('../src/each');
         var obj = {
             key0: 'value0',
             key1: 'value1',
@@ -66,7 +70,7 @@ describe('each', function () {
     });
 
     it('handles additional arguments correctly', function () {
-        var each = require('../src/each');
+        var each = req('../src/each');
         each([1], spy);
         expect(spy.calls.mostRecent().args.length).toBe(2);
 
@@ -82,7 +86,7 @@ describe('each', function () {
     });
 
     it('ignores non-iterable inputs', function () {
-        var each = require('../src/each');
+        var each = req('../src/each');
         each([], spy);
         expect(spy).not.toHaveBeenCalled();
 
@@ -109,21 +113,21 @@ describe('each', function () {
     });
 
     it('allows to map arrays', function () {
-        var each = require('../src/each');
+        var each = req('../src/each');
         expect(each([1, 2, 3, 4], function (val) {
             return 2 * val + 1;
         })).toEqual([3, 5, 7, 9]);
     });
 
     it('allows to filter arrays', function () {
-        var each = require('../src/each');
+        var each = req('../src/each');
         expect(each([1, 2, 3, 4], function (val) {
             return (val % 2 === 0) ? val : undefined;
         })).toEqual([2, 4]);
     });
 
     it('allows to map objects', function () {
-        var each = require('../src/each');
+        var each = req('../src/each');
         expect(each({
             foo: 1,
             bar: 2,
@@ -138,7 +142,7 @@ describe('each', function () {
     });
 
     it('allows to filter objects', function () {
-        var each = require('../src/each');
+        var each = req('../src/each');
         expect(each({
             foo: 1,
             bar: 2,
@@ -153,7 +157,7 @@ describe('each', function () {
 
     it('can create a bound function which allows to iterate through arrays', function () {
         // prepare
-        var each = require('../src/each');
+        var each = req('../src/each');
         var array = [1, 2, 3, 4, 5];
         var f = each.prepare(spy, expectedScope);
 
@@ -177,7 +181,7 @@ describe('each', function () {
 
     it('can create a bound function which allows to iterate through objects', function () {
         // prepare
-        var each = require('../src/each');
+        var each = req('../src/each');
         var obj = {
             key0: 'value0',
             key1: 'value1',

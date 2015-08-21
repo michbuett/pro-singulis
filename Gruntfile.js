@@ -1,18 +1,12 @@
 module.exports = function (grunt) {
     'use strict';
 
-    var expandFiles = function (glob) {
-        return grunt.file.expand({
-            filter: 'isFile'
-        }, glob);
-    };
-
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
         watch: {
             all: {
-                files: ['src/**/*.js', 'tests/**/*.js'],
+                files: ['Gruntfile.js', 'src/**/*.js', 'tests/**/*.js'],
                 tasks: ['test']
             },
         },
@@ -31,42 +25,30 @@ module.exports = function (grunt) {
         },
 
         browserify: {
-            options: {
-                browserifyOptions: {
-                    debug: true,
-                },
-            },
-
-            testSources: {
-                src: [ 'src/**/*.js', ],
-                dest: 'dist/test_sources.js',
-                options: {
-                    require: expandFiles([ './src/**/*.js', ])
-                }
-            },
-
-            test: {
-                src: [
-                    'tests/**/*.js',
-                ],
-                dest: 'dist/test_bundle.js',
-                options: {
-                    external: ['src/**/*.js'],
-                }
-            },
-
             dist: {
                 src: [
                     'src/**/*.js',
                 ],
                 dest: 'dist/pro-singulis.js',
                 options: {
-                    standalone: true,
+                    browserifyOptions: {
+                        debug: false,
+                        standalone: 'pro-singulis',
+                    },
                 }
             },
         },
 
         jasmine: {
+            dist: {
+                src: ['dist/pro-singulis.js'],
+
+                options: {
+                    keepRunner: true,
+                    specs: 'tests/**/*.js',
+                },
+            },
+
             coverage: {
                 src: ['src/**/*.js'],
 
@@ -113,6 +95,17 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-jasmine-nodejs');
 
-    grunt.registerTask('test', ['jshint', 'jasmine_nodejs', 'jasmine']);
-    grunt.registerTask('dist', ['clean', 'browserify:dist', 'uglify:dist']);
+    grunt.registerTask('test', [
+        'jshint',
+        'jasmine_nodejs',
+        'jasmine:coverage',
+        'dist',
+        'jasmine:dist',
+    ]);
+
+    grunt.registerTask('dist', [
+        'clean',
+        'browserify:dist',
+        'uglify:dist'
+    ]);
 };
