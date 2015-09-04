@@ -59,7 +59,9 @@ module.exports = function (grunt) {
                     templateOptions: {
                         template: require('grunt-template-jasmine-nml'),
                         templateOptions: {
-                            sourceRoot: '.grunt/grunt-contrib-jasmine/',
+                            pathmap: {
+                                'src/': '.grunt/grunt-contrib-jasmine/src/',
+                            }
                         },
                         coverage: 'reports/coverage/coverage.json',
                         report: [{
