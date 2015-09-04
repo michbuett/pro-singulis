@@ -1,7 +1,9 @@
 pro-singulis
 ============
 
-[![Build Status](https://travis-ci.org/michbuett/pro-singulis.svg?branch=master)](https://travis-ci.org/michbuett/pro-singulis) [![npm version](https://badge.fury.io/js/pro-singulis.svg)](http://badge.fury.io/js/pro-singulis)
+[![Build Status](https://travis-ci.org/michbuett/pro-singulis.svg?branch=master)](https://travis-ci.org/michbuett/pro-singulis) 
+[![npm version](https://badge.fury.io/js/pro-singulis.svg)](http://badge.fury.io/js/pro-singulis) 
+[![Coverage Status](https://coveralls.io/repos/michbuett/pro-singulis/badge.svg?branch=master&service=github)](https://coveralls.io/github/michbuett/pro-singulis?branch=master)
 
 A simple and lean yet powerful "forEach"
 
