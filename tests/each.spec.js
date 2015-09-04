@@ -155,58 +155,85 @@ describe('each', function () {
         });
     });
 
-    it('can create a bound function which allows to iterate through arrays', function () {
-        // prepare
-        var each = req('../src/each');
-        var array = [1, 2, 3, 4, 5];
-        var f = each.prepare(spy, expectedScope);
+    describe('prepare', function () {
+        it('can create a bound function which allows to iterate through arrays', function () {
+            // prepare
+            var each = req('../src/each');
+            var array = [1, 2, 3, 4, 5];
+            var f = each.prepare(spy, expectedScope);
 
-        // execute
-        f(array, args);
+            // execute
+            f(array, args);
 
-        // verify
-        expect(spy).toHaveBeenCalled();
-        expect(spy.calls.count()).toBe(array.length);
-        expect(actualScope).toBe(expectedScope);
+            // verify
+            expect(spy).toHaveBeenCalled();
+            expect(spy.calls.count()).toBe(array.length);
+            expect(actualScope).toBe(expectedScope);
 
-        for (var i = 0; i < array.length; i++) {
-            var spyArgs = spy.calls.argsFor(i);
-            expect(spyArgs[0]).toBe(array[i]);
-            expect(spyArgs[1]).toBe(i);
-            expect(spyArgs[2]).toBe(args[0]);
-            expect(spyArgs[3]).toBe(args[1]);
-            expect(spyArgs[4]).toBe(args[2]);
-        }
-    });
+            for (var i = 0; i < array.length; i++) {
+                var spyArgs = spy.calls.argsFor(i);
+                expect(spyArgs[0]).toBe(array[i]);
+                expect(spyArgs[1]).toBe(i);
+                expect(spyArgs[2]).toBe(args[0]);
+                expect(spyArgs[3]).toBe(args[1]);
+                expect(spyArgs[4]).toBe(args[2]);
+            }
+        });
 
-    it('can create a bound function which allows to iterate through objects', function () {
-        // prepare
-        var each = req('../src/each');
-        var obj = {
-            key0: 'value0',
-            key1: 'value1',
-            key2: 'value2'
-        };
-        var f = each.prepare(spy, expectedScope);
+        it('can create a bound function which allows to iterate through objects', function () {
+            // prepare
+            var each = req('../src/each');
+            var obj = {
+                key0: 'value0',
+                key1: 'value1',
+                key2: 'value2'
+            };
+            var f = each.prepare(spy, expectedScope);
 
-        // execute
-        f(obj, args);
+            // execute
+            f(obj, args);
 
-        // verify
-        expect(spy).toHaveBeenCalled();
-        expect(spy.calls.count()).toBe(3);
-        expect(actualScope).toBe(expectedScope);
+            // verify
+            expect(spy).toHaveBeenCalled();
+            expect(spy.calls.count()).toBe(3);
+            expect(actualScope).toBe(expectedScope);
 
-        for (var i = 0; i < 3; i++) {
-            var spyArgs = spy.calls.argsFor(i);
-            var key = 'key' + i;
-            var value = 'value' + i;
+            for (var i = 0; i < 3; i++) {
+                var spyArgs = spy.calls.argsFor(i);
+                var key = 'key' + i;
+                var value = 'value' + i;
 
-            expect(spyArgs[0]).toBe(value);
-            expect(spyArgs[1]).toBe(key);
-            expect(spyArgs[2]).toBe(args[0]);
-            expect(spyArgs[3]).toBe(args[1]);
-            expect(spyArgs[4]).toBe(args[2]);
-        }
+                expect(spyArgs[0]).toBe(value);
+                expect(spyArgs[1]).toBe(key);
+                expect(spyArgs[2]).toBe(args[0]);
+                expect(spyArgs[3]).toBe(args[1]);
+                expect(spyArgs[4]).toBe(args[2]);
+            }
+        });
+
+        it('allows to defer the scope binding', function () {
+            // prepare
+            var each = req('../src/each');
+            var list = [1, 2, 3];
+            var cb1 = jasmine.createSpy();
+            var cb2 = jasmine.createSpy();
+            var scope1 = {};
+            var scope2 = {};
+            var f1 = each.prepare(cb1, scope1);
+            var f2 = each.prepare(cb2);
+
+            // execute
+            f1.call(scope2, list);
+            f2.call(scope2, list);
+
+            // verify
+            var calls1 = cb1.calls.all();
+            var calls2 = cb2.calls.all();
+
+            for (var i = 0; i < list.length; i++) {
+                expect(calls1[i].object).toBe(scope1);
+                expect(calls2[i].object).toBe(scope2);
+            }
+        });
     });
 });

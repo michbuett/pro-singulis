@@ -88,7 +88,7 @@ module.exports = function () {
      */
     each.prepare = function (fn, scope) {
         return function (iterable, more) {
-            return each(iterable, fn, scope, more);
+            return each(iterable, fn, scope || this, more);
         };
     };
 
