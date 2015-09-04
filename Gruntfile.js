@@ -62,7 +62,17 @@ module.exports = function (grunt) {
                             sourceRoot: '.grunt/grunt-contrib-jasmine/',
                         },
                         coverage: 'reports/coverage/coverage.json',
-                        report: 'reports/coverage',
+                        report: [{
+                            type: 'html',
+                            options: {
+                                dir: 'reports/coverage/html',
+                            }
+                        }, {
+                            type: 'lcovonly',
+                            options: {
+                                dir: 'reports/coverage/lcov',
+                            }
+                        }],
                         thresholds: {
                             lines: 85,
                             statements: 85,
@@ -76,6 +86,15 @@ module.exports = function (grunt) {
 
         clean: {
             dist: ['dist/*'],
+        },
+
+        coveralls: {
+            travis: {
+                src: 'reports/coverage/lcov/*.info',
+                options: {
+                    force: true,
+                }
+            }
         },
 
         uglify: {
@@ -94,6 +113,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-jasmine-nodejs');
+    grunt.loadNpmTasks('grunt-coveralls');
 
     grunt.registerTask('test', [
         'jshint',
